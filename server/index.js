@@ -2,6 +2,8 @@
 const express = require("express");
 const morgan = require("morgan");
 
+const { addUser, signIn, getUser } = require("./handler");
+
 const PORT = 8000;
 
 express()
@@ -24,8 +26,8 @@ express()
 
   /// REST endpoints
 
-  .get("/", function (req, res) {
-    res.send("Hello World");
-  })
+  .post("/api/addUser", addUser)
+  .post("/api/signIn", signIn)
+  .get("/api/getUser/:id", getUser)
 
   .listen(PORT, () => console.info(`listen on port ${PORT}`));
