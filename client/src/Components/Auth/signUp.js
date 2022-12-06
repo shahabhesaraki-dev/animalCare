@@ -13,6 +13,7 @@ const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
@@ -35,6 +36,7 @@ const SignUp = () => {
         firstName: firstName,
         lastName: lastName,
         email: email,
+        username: username,
         password: password,
       }),
     })
@@ -113,6 +115,27 @@ const SignUp = () => {
                 firstName.length !== 0 &&
                 lastName.length !== 0 &&
                 email.length !== 0 &&
+                password.length !== 0 &&
+                splitEmail.includes("@")
+              ) {
+                return signUpHandler();
+              }
+            }}
+          />
+          <SignupInput
+            type="text"
+            placeholder="Username"
+            value={username || ""}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (
+                e.key === "Enter" &&
+                firstName.length !== 0 &&
+                lastName.length !== 0 &&
+                email.length !== 0 &&
+                username.length !== 0 &&
                 password.length !== 0 &&
                 splitEmail.includes("@")
               ) {
@@ -205,6 +228,7 @@ const SignupInput = styled.input`
   &:focus {
     border: 2px solid #240d01;
     &::placeholder {
+      transition: 400ms ease-in-out;
       position: absolute;
       top: -3px;
       margin-left: 5px;

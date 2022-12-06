@@ -6,6 +6,7 @@ import Home from "./Homepage/home";
 import Bookmarks from "./NavPages/bookmarks";
 import Messages from "./NavPages/messages";
 import ProfilePage from "./Profile/profilePage";
+import AddNewPost from "./NewPost/addNewPost";
 
 const App = () => {
   const isLogIn = localStorage.getItem("userId");
@@ -27,6 +28,9 @@ const App = () => {
         </Route>
         <Route path="/profile">
           {isLogIn ? <ProfilePage /> : <Redirect exact to="/" />}
+        </Route>
+        <Route path="/newPost">
+          {isLogIn ? <AddNewPost /> : <Redirect exact to="/" />}
         </Route>
       </Switch>
     </BrowserRouter>

@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import authImage from "../../Assets/authImage.png";
 import SignUp from "./signUp";
+// import GoogleLoginButton from "./google-Login-Button";
 
 const SignIn = () => {
   const history = useHistory();
@@ -92,6 +93,9 @@ const SignIn = () => {
             <SigninButton disabled>Sign in</SigninButton>
           )}
         </InputBox>
+
+        {/* <GoogleLoginButton /> */}
+
         <SignupBox>
           <H2>Are you a new user?</H2>
           <SignUp />
@@ -163,7 +167,7 @@ const Input = styled.input`
     border: 2px solid #240d01;
     &::placeholder {
       position: absolute;
-      transition: 300ms ease-in-out;
+      transition: 400ms ease-in-out;
       top: -3px;
       margin-left: 5px;
       font-size: 17px;
@@ -194,6 +198,22 @@ const SigninButton = styled.button`
     opacity: 0.6;
   }
 `;
+
+// const StyledGoogle = styled(GoogleLogin)`
+//   height: 50px;
+//   width: 40%;
+//   font-size: 18px;
+//   margin-top: 25px;
+//   margin-left: 25px;
+//   outline: none;
+//   border-radius: 30px !important;
+//   font-family: "Abel" !important;
+//   font-size: 21px !important;
+//   color: black !important;
+//   box-shadow: none !important;
+//   border: 2px solid #825e3a !important;
+//   padding: 25px 15px !important;
+// `;
 
 const SignupBox = styled.div`
   display: flex;

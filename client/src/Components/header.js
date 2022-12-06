@@ -7,24 +7,11 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 import { NavLink, useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { DetailsContext } from "./Context/detailsContext";
+import { useContext } from "react";
 
 const Header = () => {
-  const userId = JSON.parse(localStorage.getItem("userId"));
-
-  const [userData, setUserData] = useState([]);
-
-  useEffect(() => {
-    if (userId) {
-      const getUser = async () => {
-        const respond = await fetch(`/api/getUser/${userId}`);
-        const result = await respond.json();
-        setUserData(result.data);
-      };
-      getUser();
-    }
-    // eslint-disable-next-line
-  }, []);
+  const { userData } = useContext(DetailsContext);
 
   const history = useHistory();
 
@@ -35,50 +22,91 @@ const Header = () => {
   };
 
   return (
-    <Wrapper>
-      <nav>
-        <ul>
-          <Li>
-            <StyledNavlink to="/home">
-              <StyledFiHome size={30} />
-              Home
-            </StyledNavlink>
-          </Li>
-          <Li>
-            <StyledNavlink to="/bookmarks">
-              <StyledFiBookmark size={30} />
-              Bookmarks
-            </StyledNavlink>
-          </Li>
-          <Li>
-            <StyledNavlink to="/messages">
-              <StyledFiMessageSquare size={30} />
-              Messages
-            </StyledNavlink>
-          </Li>
-          <Li>
-            <StyledNavlink to="/profile">
-              <StyledFiUser size={30} />
-              Profile
-            </StyledNavlink>
-          </Li>
-          <Li>
-            <LogoutBox onClick={logOutHandler}>
-              <FiLogOut size={25} style={{ position: "relative" }} />
-              <Logout>LogOut({userData ? userData.firstName : null})</Logout>
-            </LogoutBox>
-          </Li>
-        </ul>
-      </nav>
-    </Wrapper>
+    <>
+      <RightWrapper>
+        <Button
+          onClick={() => {
+            history.push("/newPost");
+          }}
+        >
+          Add your post
+        </Button>
+      </RightWrapper>
+      <LeftWrapper>
+        <nav>
+          <ul>
+            <Li>
+              <StyledNavlink to="/home">
+                <StyledFiHome size={30} />
+                Home
+              </StyledNavlink>
+            </Li>
+            <Li>
+              <StyledNavlink to="/bookmarks">
+                <StyledFiBookmark size={30} />
+                Bookmarks
+              </StyledNavlink>
+            </Li>
+            <Li>
+              <StyledNavlink to="/messages">
+                <StyledFiMessageSquare size={30} />
+                Messages
+              </StyledNavlink>
+            </Li>
+            <Li>
+              <StyledNavlink to="/profile">
+                <StyledFiUser size={30} />
+                Profile
+              </StyledNavlink>
+            </Li>
+            <Li>
+              <LogoutBox onClick={logOutHandler}>
+                <FiLogOut size={25} style={{ position: "relative" }} />
+                <Logout>LogOut({userData.firstName})</Logout>
+              </LogoutBox>
+            </Li>
+          </ul>
+        </nav>
+      </LeftWrapper>
+    </>
   );
 };
 
-const Wrapper = styled.div`
+const RightWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
+  position: fixed;
   min-width: 30%;
+  top: 50px;
+  left: 30px;
+`;
+
+const Button = styled.button`
+  font-family: "Abel";
+  width: 180px;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  font-size: 22px;
+  background-color: lightgrey;
+  border: 1px solid white;
+  &:hover {
+    transition: 200ms ease-in-out;
+    font-size: 25px;
+    box-shadow: 0px 0px 3px 1px grey;
+    font-weight: 200;
+  }
+`;
+
+const LeftWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  position: fixed;
+  min-width: 30%;
+  top: 120px;
+  left: 0;
 `;
 
 const Li = styled.li`
