@@ -3,6 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
+const path = require("path");
 
 const {
   addUser,
@@ -17,7 +18,17 @@ const {
   getAllPostButYours,
 } = require("./handler");
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+
+__dirname = path.resolve();
+//-------------------HEROKU-----------------
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
+  app.get("*", () => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+//-------------------HEROKU-----------------
 
 express()
   .use(function (req, res, next) {
@@ -31,6 +42,7 @@ express()
     );
     next();
   })
+
   .use(morgan("tiny"))
   .use(express.static("./server/assets"))
   .use(express.json())
