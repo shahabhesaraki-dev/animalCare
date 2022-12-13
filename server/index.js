@@ -3,7 +3,6 @@ const express = require("express");
 const morgan = require("morgan");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
-const path = require("path");
 
 const {
   addUser,
@@ -19,16 +18,6 @@ const {
 } = require("./handler");
 
 const PORT = process.env.PORT || 5000;
-
-__dirname = path.resolve();
-//-------------------HEROKU-----------------
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/build")));
-  app.get("*", () => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
-//-------------------HEROKU-----------------
 
 express()
   .use(function (req, res, next) {
@@ -64,5 +53,12 @@ express()
   .post("/api/signIn", signIn)
   .get("/api/getUser/:id", getUser)
   .get("/api/getAllPostButYours/:userId", getAllPostButYours)
+
+  .get("*", (req, res) => {
+    res.status(404).json({
+      status: 404,
+      message: "This is obviously not what you are looking for.",
+    });
+  })
 
   .listen(PORT, () => console.info(`listen on port ${PORT}`));
